@@ -63,7 +63,7 @@ return {
 
         -- Telescope
         ["<Leader><Leader>"] = {
-          "<cmd>Telescope frecency workspace=CWD<cr>",
+          function() require("telescope.builtin").find_files() end,
           desc = "Find files",
         },
 
