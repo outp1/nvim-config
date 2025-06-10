@@ -26,6 +26,7 @@ return {
         find_files = {
           find_command = { "rg", "--files", "--sortr=modified" },
           hidden = true,
+          no_ignore = true,
         },
       },
       extensions = {
