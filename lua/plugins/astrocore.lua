@@ -76,7 +76,7 @@ return {
         -- CodeCompanion
         ["<Leader>a"] = {
           "<cmd>CodeCompanionActions<cr>",
-          desc = "Generate docstrings",
+          desc = "CodeCompanion actions",
         },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
@@ -85,6 +85,12 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+      },
+      v = {
+        ["<Leader>a"] = {
+          "<cmd>CodeCompanionActions<cr>",
+          desc = "CodeCompanion actions",
+        },
       },
     },
   },
