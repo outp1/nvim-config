@@ -31,12 +31,17 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      "pyright"
+      "pyright",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      sqls = {
+        setup = {
+          cmd = { "sqls", "-config", "~/.config/sqls/config.yml" },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {

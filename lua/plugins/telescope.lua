@@ -4,6 +4,17 @@ return {
   -- Telescope config
   {
     "nvim-telescope/telescope.nvim",
+
+    keys = {
+        {
+            "<leader>j",
+            "<cmd>Telescope jsonfly<cr>",
+            desc = "Open json(fly)",
+            ft = { "json", "xml", "yaml" },
+            mode = "n"
+        }
+    },
+
     opts = {
       defaults = {
         -- Default configuration for telescope goes here:
@@ -25,8 +36,8 @@ return {
       pickers = {
         find_files = {
           find_command = { "rg", "--files", "--sortr=modified" },
-          hidden = true,
-          no_ignore = true,
+          -- hidden = false,
+          -- no_ignore = true,
         },
       },
       extensions = {
