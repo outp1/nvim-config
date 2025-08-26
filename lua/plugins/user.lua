@@ -112,4 +112,27 @@ return {
   --     )
   --   end,
   -- },
+  -- Override dap-ui auto-open: don't open on attach
+  {
+    "rcarriga/nvim-dap-ui",
+    optional = true,
+    config = function(_, opts)
+      local ok_dap, dap = pcall(require, "dap")
+      local ok_dapui, dapui = pcall(require, "dapui")
+      if not (ok_dap and ok_dapui) then return end
+
+      -- Ensure dap-ui is configured with provided or default options
+      dapui.setup(opts or {})
+
+      -- Do not auto-open on attach; still auto-open on launch
+      dap.listeners.after.event_initialized["dapui_config"] = function(session)
+        local request = session and session.config and session.config.request
+        if request ~= "attach" then dapui.open() end
+      end
+
+      -- Ensure UI closes when session ends
+      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+      dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+    end,
+  },
 }
