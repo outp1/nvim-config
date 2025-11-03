@@ -62,22 +62,24 @@ return {
         },
       },
       adapters = {
-        opts = {
-          allow_insecure = true,
-          proxy = os.getenv "OPENAI_HTTP_PROXY" or "",
-        },
-        openai = function()
-          return require("codecompanion.adapters").extend("openai", {
-            env = {
-              api_key = os.getenv "OPENAI_API_KEY",
-            },
-            schema = {
-              model = {
-                default = "gpt-4.1",
+        http = {
+          opts = {
+            allow_insecure = true,
+            -- proxy = os.getenv "OPENAI_HTTP_PROXY" or "",
+          },
+          openai = function()
+            return require("codecompanion.adapters").extend("openai", {
+              env = {
+                api_key = os.getenv "OPENAI_API_KEY",
               },
-            },
-          })
-        end,
+              schema = {
+                model = {
+                  default = "gpt-5",
+                },
+              },
+            })
+          end,
+        },
       },
       extensions = {
 
@@ -158,7 +160,6 @@ return {
             },
           },
         },
-
       },
       prompt_library = {
         ["Project Coordinator"] = {
@@ -177,6 +178,28 @@ return {
             {
               role = "user",
               content = "Изучи документацию проекта над которым мы работаем для определения его сути.\n",
+            },
+          },
+        },
+        ["Tasks Engineer"] = {
+          strategy = "chat",
+          description = "Helps you to solve task by gathering information about it and building a prompt",
+          opts = {
+            auto_submit = false,
+            short_name = "ter",
+            ignore_system_prompt = true,
+          },
+          prompts = {
+            {
+              role = "system",
+              content = function()
+                vim.g.codecompanion_yolo_mode = true
+                return require "prompts.context_engineer_gpt5"
+              end,
+            },
+            {
+              role = "user",
+              content = "Today we are working on",
             },
           },
         },

@@ -51,6 +51,40 @@ return {
       -- the key is the server that is being setup with `lspconfig`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+
+      -- Custom jdtls handler to use global installation
+      jdtls = function(_, opts)
+        local jdtls_install = vim.fn.expand("~/.local/share/jdtls")
+        local jdtls_path = jdtls_install .. "/plugins/org.eclipse.equinox.launcher_*.jar"
+        local launcher = vim.fn.glob(jdtls_path)
+
+        if launcher ~= "" then
+          local config_path = jdtls_install .. "/config_linux"
+          local data_dir = vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+
+          opts.cmd = {
+            "java",
+            "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+            "-Dosgi.bundles.defaultStartLevel=4",
+            "-Declipse.product=org.eclipse.jdt.ls.core.product",
+            "-Dlog.protocol=true",
+            "-Dlog.level=ALL",
+            "-Xms1g",
+            "--add-modules=ALL-SYSTEM",
+            "--add-opens", "java.base/java.util=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+            "-jar", launcher,
+            "-configuration", config_path,
+            "-data", data_dir,
+          }
+
+          require("lspconfig").jdtls.setup(opts)
+          return
+        end
+
+        -- Fall back to default (Mason-installed) jdtls if global install not found
+        require("lspconfig").jdtls.setup(opts)
+      end,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {

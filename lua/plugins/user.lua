@@ -52,11 +52,14 @@ return {
     config = function(_, opts) require("lsp_signature").setup(opts) end,
   },
 
-  {
-    "kkoomen/vim-doge",
-    event = "VeryLazy",
-    build = ":call doge#install()",
-  },
+  -- {
+  --   "kkoomen/vim-doge",
+  --   event = "VeryLazy",
+  --   build = ":call doge#install()",
+  --   opts = {
+  --     doge_enable_mappings = 0,
+  --   }
+  -- },
 
   {
     "nvim-telescope/telescope.nvim",
@@ -134,5 +137,19 @@ return {
       dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
       dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
     end,
+  },
+  {
+    "andrewferrier/wrapping.nvim",
+    config = function()
+      require("wrapping").setup {
+        softener = { markdown = true },
+      }
+    end,
+  },
+
+  {
+    "gruvw/strudel.nvim",
+    build = "npm install",
+    config = function() require("strudel").setup() end,
   },
 }

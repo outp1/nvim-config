@@ -68,15 +68,46 @@ return {
         },
 
         -- Doge docstrings autogenerate
-        ["<Leader>lg"] = {
-          "<cmd>DogeGenerate<cr>",
-          desc = "Generate docstrings",
-        },
+        -- ["<Leader>lg"] = {
+        --   "<cmd>DogeGenerate<cr>",
+        --   desc = "Generate docstrings",
+        -- },
 
         -- CodeCompanion
         ["<Leader>a"] = {
           "<cmd>CodeCompanionActions<cr>",
           desc = "CodeCompanion actions",
+        },
+
+        -- Strudel
+        ["<Leader>s"] = { desc = "Strudel" },
+        ["<Leader>sl"] = {
+          function() require("strudel").launch() end,
+          desc = "Launch Strudel",
+        },
+        ["<Leader>sq"] = {
+          function() require("strudel").quit() end,
+          desc = "Quit Strudel",
+        },
+        ["<Leader>st"] = {
+          function() require("strudel").toggle() end,
+          desc = "Strudel Toggle Play/Stop",
+        },
+        ["<Leader>su"] = {
+          function() require("strudel").update() end,
+          desc = "Strudel Update",
+        },
+        ["<Leader>ss"] = {
+          function() require("strudel").stop() end,
+          desc = "Strudel Stop Playback",
+        },
+        ["<Leader>sb"] = {
+          function() require("strudel").set_buffer() end,
+          desc = "Strudel set current buffer",
+        },
+        ["<Leader>sx"] = {
+          function() require("strudel").execute() end,
+          desc = "Strudel set current buffer and update",
         },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
